@@ -3,104 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spirit & Soul Outreach - Community Gallery</title>
+    <title>Spirit & Soul Outreach - Gallery</title>
     <style>
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
         body {
-            font-family: Georgia, serif;
-            background: linear-gradient(135deg, #8B7355 0%, #D2B48C 100%);
-            color: #3E2723;
-            line-height: 1.6;
+            font-family: "Georgia", serif;
+            background: #f6f4f2;
+            color: #2f2f2f;
+            line-height: 1.7;
         }
 
-        header {
-            background: rgba(62, 39, 35, 0.9);
-            color: #F5DEB3;
-            padding: 2rem 0;
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #2f3e3a, #4f6f64);
+            color: #fff;
+            padding: 3rem 1.5rem;
             text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
         }
 
-        header h1 {
-            font-size: 2.5rem;
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(106, 143, 131, 0.2), transparent);
+            pointer-events: none;
+        }
+
+        .hero h1 {
             margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+            position: relative;
+            z-index: 1;
         }
 
-        nav {
-            background: rgba(139, 115, 85, 0.9);
-            padding: 1rem 0;
+        .hero blockquote {
+            margin-top: 1.5rem;
+            font-style: italic;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navigation Tabs */
+        .tabs {
+            background: #ffffff;
+            border-bottom: 2px solid #e8e6e3;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 1rem;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 2rem;
+        .tab {
+            background: none;
+            border: none;
+            color: #6a6a6a;
+            font-family: "Georgia", serif;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
         }
 
-        nav a {
-            color: #F5DEB3;
-            text-decoration: none;
-            font-size: 1.1rem;
-            transition: color 0.3s;
+        .tab:hover {
+            color: #3f5d55;
         }
 
-        nav a:hover {
-            color: #FFF;
+        .tab.active {
+            color: #3f5d55;
+            border-bottom-color: #6a8f83;
+            font-weight: bold;
+        }
+
+        /* Sections */
+        section {
+            padding: 2.5rem 1.5rem;
+            max-width: 1200px;
+            margin: auto;
         }
 
         .section-content {
-            max-width: 1200px;
-            margin: 3rem auto;
-            padding: 0 2rem;
+            display: none;
         }
 
-        .section-content h2 {
+        .section-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            margin-bottom: 1.5rem;
+            color: #3f5d55;
+            font-size: 2rem;
             text-align: center;
-            font-size: 2.5rem;
-            color: #3E2723;
-            margin-bottom: 3rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
+        /* Gallery Grid */
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
             margin-top: 2rem;
         }
 
         .gallery-item {
-            background: white;
-            border-radius: 10px;
+            background: #ffffff;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
             cursor: pointer;
         }
 
         .gallery-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
         }
 
-        .gallery-item img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            display: block;
-        }
-
+        .gallery-item img,
         .gallery-item video {
             width: 100%;
             height: 250px;
@@ -109,281 +149,1077 @@
         }
 
         .gallery-caption {
-            padding: 1.5rem;
+            padding: 1rem;
         }
 
         .gallery-caption h3 {
-            color: #8B7355;
+            color: #3f5d55;
             margin-bottom: 0.5rem;
-            font-size: 1.4rem;
+            font-size: 1.1rem;
         }
 
         .gallery-caption p {
-            color: #666;
-            line-height: 1.6;
+            color: #6a6a6a;
+            font-size: 0.9rem;
+            line-height: 1.5;
         }
 
         .gallery-date {
             color: #999;
-            font-style: italic;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             margin-top: 0.5rem;
+            font-style: italic;
         }
 
-        /* Video Section */
-        .video-section {
-            margin-top: 4rem;
+        /* Video Play Button Overlay */
+        .video-wrapper {
+            position: relative;
         }
 
-        .video-container {
-            max-width: 800px;
-            margin: 2rem auto;
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        .play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(106, 143, 131, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            transition: all 0.3s ease;
         }
 
-        .video-container video {
-            width: 100%;
+        .play-overlay::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 20px solid white;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            margin-left: 4px;
+        }
+
+        .gallery-item:hover .play-overlay {
+            background: rgba(106, 143, 131, 1);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        /* Upload Section */
+        .upload-section {
+            background: #eef4f1;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .upload-box {
+            border: 2px dashed #6a8f83;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            background: #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        .upload-box:hover {
+            border-color: #4f6f64;
+            background: #f9fdfb;
+        }
+
+        .upload-box input[type="file"] {
+            display: none;
+        }
+
+        .upload-btn {
+            background: linear-gradient(135deg, #6a8f83, #4f6f64);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            font-family: "Georgia", serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(106, 143, 131, 0.3);
+        }
+
+        .form-group {
+            margin-top: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
             display: block;
+            margin-bottom: 0.5rem;
+            color: #3f5d55;
+            font-weight: bold;
         }
 
-        .video-caption {
-            padding: 1.5rem;
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #d8d6d3;
+            border-radius: 6px;
+            font-family: "Georgia", serif;
+            font-size: 0.95rem;
         }
 
-        /* Modal styles */
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
-            z-index: 1000;
-            left: 0;
             top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.9);
-            animation: fadeIn 0.3s;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
         }
 
         .modal-content {
+            max-width: 90%;
+            max-height: 90%;
             position: relative;
-            margin: auto;
-            padding: 0;
-            width: 90%;
-            max-width: 900px;
-            top: 50%;
-            transform: translateY(-50%);
         }
 
-        .modal-content img {
-            width: 100%;
-            height: auto;
-            border-radius: 5px;
+        .modal-content img,
+        .modal-content video {
+            max-width: 100%;
+            max-height: 85vh;
+            border-radius: 8px;
         }
 
-        .close {
+        .modal-close {
             position: absolute;
-            top: 15px;
-            right: 35px;
-            color: #f1f1f1;
-            font-size: 40px;
+            top: -40px;
+            right: 0;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .modal-caption {
+            color: white;
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 1.1rem;
+        }
+
+        /* Cases Card */
+        .case-card {
+            background: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .case-card:hover {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+
+        .case-images {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0;
+        }
+
+        .case-images img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .case-content {
+            padding: 2rem;
+        }
+
+        .case-content h3 {
+            color: #3f5d55;
+            margin-bottom: 0.5rem;
+        }
+
+        .case-content ul {
+            margin: 1rem 0;
+        }
+
+        .progress-bar {
+            margin: 1.5rem 0;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #6a6a6a;
+        }
+
+        .progress {
+            width: 100%;
+            height: 12px;
+            background: #e8e6e3;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #6a8f83, #4f6f64);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .donate-btn {
+            background: linear-gradient(135deg, #6a8f83, #4f6f64);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            font-family: "Georgia", serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .donate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(106, 143, 131, 0.3);
+        }
+
+        /* Donation Section */
+        .donation-container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .donation-intro {
+            background: #eef4f1;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .donation-form-container {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .donation-amounts {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #e8e6e3;
+        }
+
+        .donation-amounts h3,
+        .donor-info h3 {
+            color: #3f5d55;
+            margin-bottom: 1rem;
+        }
+
+        .amount-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .amount-btn {
+            background: #f6f4f2;
+            border: 2px solid #d8d6d3;
+            color: #3f5d55;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: "Georgia", serif;
+            font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
-            z-index: 1001;
+            transition: all 0.3s ease;
         }
 
-        .close:hover {
-            color: #bbb;
+        .amount-btn:hover {
+            border-color: #6a8f83;
+            background: #eef4f1;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .amount-btn.active {
+            background: linear-gradient(135deg, #6a8f83, #4f6f64);
+            color: white;
+            border-color: #6a8f83;
         }
 
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .payment-method-btn {
+            background: #f6f4f2;
+            border: 2px solid #d8d6d3;
+            color: #3f5d55;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: "Georgia", serif;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-method-btn:hover {
+            border-color: #6a8f83;
+            background: #eef4f1;
+        }
+
+        .payment-method-btn.active {
+            background: #eef4f1;
+            border-color: #6a8f83;
+            color: #3f5d55;
+        }
+
+        .payment-details {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #e8e6e3;
+        }
+
+        .donate-submit-btn {
+            background: linear-gradient(135deg, #6a8f83, #4f6f64);
+            color: white;
+            border: none;
+            padding: 1.2rem 2rem;
+            border-radius: 8px;
+            font-family: "Georgia", serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        .donate-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(106, 143, 131, 0.4);
+        }
+
+        .card {
+            background: #ffffff;
+            border-left: 4px solid #6a8f83;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #3f5d55;
+        }
+
+        .label {
+            font-size: 0.9rem;
+            color: #6a6a6a;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        ul {
+            padding-left: 1.2rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: #2f3e3a;
+            color: #fff;
+            margin-top: 3rem;
+        }
+
+        footer .small {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.8rem;
-            }
-
-            nav ul {
-                gap: 1rem;
-            }
-
-            .section-content h2 {
+            .hero h1 {
                 font-size: 2rem;
             }
 
+            .tabs {
+                gap: 1rem;
+                flex-wrap: wrap;
+            }
+
             .gallery {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             }
         }
     </style>
 </head>
 <body>
-    <header>
+    <!-- Hero -->
+    <div class="hero">
         <h1>🕊️ Spirit & Soul Outreach</h1>
-        <p>Serving with Love, Compassion, and Hope</p>
-    </header>
+        <blockquote>"For where your treasure is, there your heart will be also." - Matthew 6:21</blockquote>
+    </div>
 
-    <nav>
-        <ul>
-            <li><a href="#about">About</a></li>
-            <li><a href="#photos">Photos</a></li>
-            <li><a href="#videos">Videos</a></li>
-            <li><a href="#cases">Our Cases</a></li>
-            <li><a href="#donate">Donate</a></li>
-            <li><a href="#share">Share Media</a></li>
-        </ul>
-    </nav>
+    <!-- Navigation Tabs -->
+    <div class="tabs">
+        <button class="tab active" onclick="showSection('about')">About</button>
+        <button class="tab" onclick="showSection('photos')">Photos</button>
+        <button class="tab" onclick="showSection('videos')">Videos</button>
+        <button class="tab" onclick="showSection('cases')">Our Cases</button>
+        <button class="tab" onclick="showSection('donate')">Donate</button>
+        <button class="tab" onclick="showSection('upload')">Share Media</button>
+    </div>
 
+    <!-- About Section -->
+    <section id="about" class="section-content active">
+        <h2> Mission</h2>
+        <div class="intro">
+            <p>Spirit & Soul Outreach exists as a response to the love, mercy, and restoration I personally received from God and through the community of first mennonite church of San Francisco Church. Having been carried, supported, and uplifted during seasons of need, my heart has been shaped by compassion and gratitude and a deep responsibility to give that love away.</p>
+
+                <p>   This outreach  also flows from a calling I have walked in quietly for many years, serving, interceding, and helping where I could often alone, often unseen. Now, in this season, I sense God inviting others to walk alongside me, so that together we can extend hope, dignity, and practical support to widows, single mothers, and vulnerable children in Africa. 
+                Spirit & Soul Outreach is not about charity alone it is about shared compassion, obedience to God’s leading, and the belief that love multiplies when it is given freely. We welcome all who feel stirred to pray, to serve, or to give, as partners in helping restore lives and remind those in need that they are seen, loved, and not forgotten.
+            </p>
+        </div>
+    </section>
+
+    <!-- Photos Section -->
     <section id="photos" class="section-content">
-        <h2>📷 Photo Gallery</h2>
+        <h2>📸 Photo Gallery</h2>
         <div class="gallery" id="photo-gallery">
-            
-            <!-- Photo 1: Community Prayer -->
-            <div class="gallery-item" onclick="openModal('images/community-prayer.jpg')">
-                <img src="images/community-prayer.jpg" alt="Community team Gathering" onerror="this.src='https://via.placeholder.com/400x250/8B7355/F5DEB3?text=Community+Prayer'">
+            <!-- Sample Photos -->
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="images/food-distribution.jpg" alt="Community Prayer">
                 <div class="gallery-caption">
                     <h3>Community team Gathering</h3>
-                    <p>This amazing team weekly bring together any distributions that is available for this group of women and children that are HIV POSITIVE and need love and hope.</p>
+                    <p>This amazing team  weekly  bring together any distributions that is available for this group of women and children that are HIV POSITIVE and need love and hope.</p>
                     <div class="gallery-date">December 01, 2025</div>
                 </div>
             </div>
 
-            <!-- Photo 2: Food Distribution -->
-            <div class="gallery-item" onclick="openModal('images/food-distribution.jpg')">
-                <img src="images/food-distribution.jpg" alt="Food Distribution" onerror="this.src='https://via.placeholder.com/400x250/8B7355/F5DEB3?text=Food+Distribution'">
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="images/community-prayer.jpg" alt="Food Distribution">
                 <div class="gallery-caption">
-                    <h3>Food Distribution</h3>
-                    <p>Serving a cup of corn flour is all we can do weekly for now, with love and compassion. A moment of community and care. This gathering reflects the power of coming together to serve women and children in need, many of whom are widows, HIV positive, single mothers, and vulnerable children.</p>
+                    <h3>Food Distribution </h3>
+                    <p>Serving a cup of corn flour is all we can do weekly for now, with love and compassion.A moment of community and care. This gathering reflects the power of coming together to serve women and children in need,many of whom are widows,HIV positive, single mothers, and vulnerable children. Through shared resources, prayer, and compassion, hope is restored one step at a time. .</p>
                     <div class="gallery-date">December 8, 2025</div>
                 </div>
             </div>
 
-            <!-- Photo 3: Children -->
-            <div class="gallery-item" onclick="openModal('images/children.jpg')">
-                <img src="images/children.jpg" alt="Let the children come to me" onerror="this.src='https://via.placeholder.com/400x250/8B7355/F5DEB3?text=Children+Ministry'">
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="images/photo5.jpg" alt="Let the children come to me">
                 <div class="gallery-caption">
                     <h3>Let the children come to me</h3>
-                    <p>These are precious children from a local community in GULU, each one carrying a story known fully only by God. Many face daily challenges such as hunger, lack of school fees, and unstable housing. Through Spirit & Soul Outreach, we are committed to standing with them offering love, dignity, prayer, and practical support.</p>
+                    <p>These are precious children from a local community in GULU, each one carrying a story known fully only by God. Many face daily challenges such as hunger, lack of school fees, and unstable housing. Through Spirit & Soul Outreach, we are committed to standing with them offering love, dignity, prayer, and practical support so they may know they are seen,valued, and not forgotten.</p>
                     <div class="gallery-date">December 01, 2025</div>
                 </div>
             </div>
-
-            <!-- Photo 4: Call to Help -->
-            <div class="gallery-item" onclick="openModal('images/call-to-help.jpg')">
-                <img src="images/call-to-help.jpg" alt="A Call to help" onerror="this.src='https://via.placeholder.com/400x250/8B7355/F5DEB3?text=Call+to+Help'">
-                <div class="gallery-caption">
-                    <h3>A Call to help</h3>
-                    <p>These children are part of families facing poverty, illness, and displacement. Your support can provide food, education, and hope. Together, we can make a lasting difference in their lives.</p>
-                    <div class="gallery-date">November 01, 2025</div>
-                </div>
-            </div>
-
-            <!-- Photo 5 -->
-            <div class="gallery-item" onclick="openModal('images/photo5.jpg')">
-                <img src="images/photo5.jpg" alt="Community Outreach" onerror="this.src='https://via.placeholder.com/400x250/8B7355/F5DEB3?text=Outreach+Activity'">
-                <div class="gallery-caption">
-                    <h3>Community Outreach Activity</h3>
-                    <p>Reaching out to those in need with love and compassion. Every act of kindness brings hope to our community members.</p>
-                    <div class="gallery-date">December 2025</div>
-                </div>
-            </div>
-
-            <!-- Photo 6 -->
-            <div class="gallery-item" onclick="openModal('images/photo6.jpg')">
-                <img src="images/photo6.jpg" alt="Ministry Work" onerror="this.src='https://via.placeholder.com/400x250/8B7355/F5DEB3?text=Ministry+Work'">
-                <div class="gallery-caption">
-                    <h3>Ministry in Action</h3>
-                    <p>Serving our community through dedicated outreach programs. Together we make a difference in the lives of those we serve.</p>
-                    <div class="gallery-date">December 2025</div>
-                </div>
-            </div>
-
-            <!-- Photo 7 -->
-            <div class="gallery-item" onclick="openModal('images/photo7.jpg')">
-                <img src="images/photo7.jpg" alt="Community Support" onerror="this.src='https://via.placeholder.com/400x250/8B7355/F5DEB3?text=Community+Support'">
-                <div class="gallery-caption">
-                    <h3>Supporting Our Community</h3>
-                    <p>Providing essential support and care to families in need. Every person matters, and every contribution makes an impact.</p>
-                    <div class="gallery-date">December 2025</div>
-                </div>
-            </div>
-
-            <!-- Photo 8 -->
-            <div class="gallery-item" onclick="openModal('images/photo8.jpg')">
-                <img src="images/photo8.jpg" alt="Outreach Program" onerror="this.src='https://via.placeholder.com/400x250/8B7355/F5DEB3?text=Outreach+Program'">
-                <div class="gallery-caption">
-                    <h3>Outreach Program</h3>
-                    <p>Bringing hope and practical assistance to vulnerable families. Through faith and action, we serve with love.</p>
-                    <div class="gallery-date">December 2025</div>
-                </div>
-            </div>
-
-            <!-- Photo 9 -->
-            <div class="gallery-item" onclick="openModal('images/photo9.jpg')">
-                <img src="images/photo9.jpg" alt="Community Service" onerror="this.src='https://via.placeholder.com/400x250/8B7355/F5DEB3?text=Community+Service'">
-                <div class="gallery-caption">
-                    <h3>Community Service</h3>
-                    <p>Dedicated to serving those who need us most. Every day we work to bring hope, dignity, and support to our community.</p>
-                    <div class="gallery-date">December 2025</div>
-                </div>
-            </div>
-
-            <!-- Photo 10 -->
-            <div class="gallery-item" onclick="openModal('images/photo10.jpg')">
-                <img src="images/photo10.jpg" alt="Ministry Outreach" onerror="this.src='https://via.placeholder.com/400x250/8B7355/F5DEB3?text=Ministry+Outreach'">
-                <div class="gallery-caption">
-                    <h3>Ministry Outreach</h3>
-                    <p>Reaching hearts and changing lives through compassionate service. Together we build a stronger, more caring community.</p>
-                    <div class="gallery-date">December 2025</div>
-                </div>
-            </div>
-
         </div>
+        <div class="gallery-item" onclick="openModal(this)">
+            <img src="images/call-to-help.jpg" alt="a call to help">
+            <div class="gallery-caption">
+                <h3>A Call to help</h3>
+                <p>These children are part of families facing extreme hardship, including homelessness and food insecurity due to their health issues. Some are orphans, others are cared for by struggling single mothers. Spirit & Soul Outreach exists to extend the love of Christ in tangible ways through food support, school assistance, and continued prayer for restoration and healing.</p>
+                <div class="gallery-date">November 01, 2025</div>
+            </div>
+        </div>
+    </div>
+    <div class="gallery-item" onclick="openModal(this)">
+        <img src="images/children.jpg" alt="a call to love">
+        <div class="gallery-caption">
+            <h3>A Call to Love</h3>
+            <p>Every photo represents a life, a prayer, and a call to love. If you feel led to stand with us through prayer or giving you become part of their story of hope.</p>
+            <div class="gallery-date">November 01, 2025</div>
+        </div>
+    </div>
+</div>
+<div class="gallery-item" onclick="openModal(this)">
+    <img src="images/photo10.jpg" alt="a call to help">
+    <div class="gallery-caption">
+        <h3>under compasion care.</h3>
+        <p>Hamida N is under the care of a compassionate good samaritan, (was a friend) who stepped in after the loss of her mother. Limited resources make it difficult to meet Hamida's medical, nutritional, and educational needs. Support is needed to help provide stability, care, and hope</p>
+        <div class="gallery-date">November 01, 2025</div>
+    </div>
+</div>
+</div>
     </section>
 
-    <!-- Video Section -->
-    <section id="videos" class="section-content video-section">
+    <!-- Videos Section -->
+    <section id="videos" class="section-content">
         <h2>🎥 Video Gallery</h2>
-        <div class="video-container">
-            <video controls>
-                <source src="WhatsApp Video 2025-12-18 at 06.01.37.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <div class="video-caption">
-                <h3>Outreach in Action</h3>
-                <p>Watch our team in action as we serve the community with love and dedication. This video captures the heart of our ministry work.</p>
-                <div class="gallery-date">December 2025</div>
+        <div class="gallery" id="video-gallery">
+            <!-- Sample Videos -->
+            <div class="gallery-item" onclick="openModal(this)">
+                <div class="video-wrapper">
+                    <video src="WhatsApp Video 2025-12-18 at 06.01.37.mp4" poster="Screenshot 2025-12-18 at 6.12.19 AM.png"></video>
+                    <div class="play-overlay"></div>
+                </div>
+                <div class="gallery-caption">
+                    <h3>Story time, God's message always spread.:</h3>
+                    <p>these children are always excited to learn about stories of the bible.</p>
+                    <div class="gallery-date">December 12, 2025</div>
+                </div>
+            </div>
+
+            <div class="gallery-item" onclick="openModal(this)">
+                <div class="video-wrapper">
+                    <video src="WhatsApp Video 2025-12-18 at 06.01.37.mp4" poster="Screenshot 2025-12-18 at 6.12.19 AM.png"></video>
+                    <div class="play-overlay"></div>
+                </div>
+                <div class="gallery-caption">
+                    <h3>story time </h3>
+                    <p>Experience the joy of learning about stories of the Bible.</p>
+                    <div class="gallery-date">December 12, 2025</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Modal for full-size images -->
-    <div id="imageModal" class="modal" onclick="closeModal()">
-        <span class="close">&times;</span>
-        <div class="modal-content">
-            <img id="modalImage" src="" alt="Full size image">
+    <!-- Cases Section -->
+    <section id="cases" class="section-content">
+        <h2>❤️ Our Outreach Cases</h2>
+        
+        <div class="case-card">
+            <div class="case-images">
+                <img src="images/photo6.jpg" alt=" widow and Single mother of 3 children">
+                <img src="images/photo6.jpg" alt="God's love is more">
+            </div>
+            <div class="case-content">
+                <h3>Case 1: widow, Single Mother of 3 children 8yr , 6yrs and 5yrs</h3>
+                <p class="label">Need: stable Housing & other basic needs</p>
+                <p>Robinah lost her husband instantly in a tragic car accident and was left without support or shelter. She currently stays at a church construction with her children. To survive, she sells individual eggs on the streets, but her income is not enough to provide housing or consistent school fees.:</p>
+                <ul>
+                    <li>Temporary housing assistance</li>
+                    <li>Weekly food assistance</li>
+                    <li>Job placement support</li>
+                    <li>school fees and requirements</li>
+                </ul>
+                <div class="progress-bar">
+                    <div class="progress-label">
+                        <span>Raised: &0</span>
+                        <span>Goal: $5,000</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-fill" style="width: 48%"></div>
+                    </div>
+                </div>
+                <p class="label">Status: Active - Donations Welcome</p>
+                <button class="donate-btn" onclick="openDonation('Case #1: Single Mother Support')">💝 Donate to This Case</button>
+            </div>
+        </div>
+
+        <div class="case-card">
+            <div class="case-images">
+                <img src="images/photo10.jpg" alt="Hamida">
+                <img src="images/photo10.jpg" alt="Medical care">
+            </div>
+            <div class="case-content">
+                <h3>Case 2: ORPHAN</h3>
+                <p class="label">Need: Medical Care,school fees & Shelter</p>
+                <p>Hamida is a brave young girl currently under the compassionate care of Catherine, a trusted friend of her late mother. When Hamida's mother passed away(For HIV AIDS), Catherine her mother's distant friend stepped forward in love to care for her, despite having no legal or family obligation to do so.
+                    Catherine now carries the full responsibility of providing for Hamida's daily needs. This includes ensuring she has food, clothing, access to education, and consistent medical care. Due to limited resources, meeting these needs has become increasingly difficult.
+                    Hamida depends on regular medical treatment and ongoing support, which places a heavy financial and emotional burden on her caregiver. Catherine does her best, but she cannot do this alone.
+                    Through Spirit & Soul Outreach, we are prayerfully seeking support to help cover Hamida's essential needsmedical care, nutrition, clothing, and school related expenses so that she can grow in stability, health, and hope.</p>
+                <ul>
+                    <li>Medical care and health suppliments</li>
+                    <li>Shelter placement</li>
+                    <li>toys/clothes</li>
+                    <li>school fees</li>
+                </ul>
+                <div class="progress-bar">
+                    <div class="progress-label">
+                        <span>Raised: $0</span>
+                        <span>Goal: $3,000</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-fill" style="width: 77.5%"></div>
+                    </div>
+                </div>
+                <p class="label">Status: In Progress</p>
+                <button class="donate-btn" onclick="openDonation('Case #2: Homeless Veteran Rehabilitation')">💝 Donate to This Case</button>
+            </div>
+        </div>
+
+        <div class="case-card">
+            <div class="case-images">
+                <img src="images/photo8.jpg" alt="single mother">
+                <img src="images/photo7.jpg" alt="husband lost with mental illness">
+                
+                
+            </div>
+            <div class="case-content">
+                <h3>Case 3: Children Education Fund</h3>
+                <p class="label">Needs: School Supplies & fees, clothing</p>
+                <p>Supporting children whose fathers diapeared due to mental illnesses, political issues and tragedy:</p>
+                <ul>
+                    <li>backpacks</li>
+                    <li>Food</li>
+                    <li>story books</li>
+                    <li>Toys,bibles</li>
+                    <li>shoes, clothes</li>
+                </ul>
+                <div class="progress-bar">
+                    <div class="progress-label">
+                        <span>Raised: $0</span>
+                        <span>Goal: $6,000</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-fill" style="width: 63.3%"></div>
+                    </div>
+                </div>
+                <p class="label">Status: Ongoing Program</p>
+                <button class="donate-btn" onclick="openDonation('Case #3: Youth Education Fund')">💝 Donate to This Case</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donation Section -->
+    <section id="donate" class="section-content">
+        <h2>💝 Make a Donation</h2>
+        <div class="donation-container">
+            <div class="donation-intro">
+                <p>Your generous donation helps us continue our mission of serving those in need. Every contribution, no matter the size, makes a real difference in someone's life.</p>
+            </div>
+
+            <div class="donation-form-container">
+                <div class="donation-amounts">
+                    <h3>Select Amount</h3>
+                    <div class="amount-buttons">
+                        <button class="amount-btn" onclick="selectAmount(25)">$25</button>
+                        <button class="amount-btn" onclick="selectAmount(50)">$50</button>
+                        <button class="amount-btn" onclick="selectAmount(100)">$100</button>
+                        <button class="amount-btn" onclick="selectAmount(250)">$250</button>
+                        <button class="amount-btn" onclick="selectAmount(500)">$500</button>
+                        <button class="amount-btn active" onclick="selectAmount('custom')">Custom</button>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customAmount">Amount ($)</label>
+                        <input type="number" id="customAmount" placeholder="Enter amount" min="1" value="50">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="donationPurpose">Donation Purpose</label>
+                        <select id="donationPurpose">
+                            <option value="general">General Fund Where Most Needed</option>
+                            <option value="case1">Case #1: widow</option>
+                            <option value="case2">Case #2: Orphan</option>
+                            <option value="case3">Case #3: children</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="recurring"> Make this a monthly donation
+                        </label>
+                    </div>
+                </div>
+
+                <div class="donor-info">
+                    <h3>Your Information</h3>
+                    <form id="donationForm">
+                        <div class="form-group">
+                            <label for="donorName">Full Name *</label>
+                            <input type="text" id="donorName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="donorEmail">Email Address *</label>
+                            <input type="email" id="donorEmail" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="donorPhone">Phone Number (Optional)</label>
+                            <input type="tel" id="donorPhone">
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="anonymous"> Make my donation anonymous
+                            </label>
+                        </div>
+
+                        <h3 style="margin-top: 2rem;">Payment Method</h3>
+                        
+                        <div class="payment-methods">
+                            <button type="button" class="payment-method-btn active" onclick="selectPayment('card')">
+                                💳 Credit/Debit Card
+                            </button>
+                            <button type="button" class="payment-method-btn" onclick="selectPayment('paypal')">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23003087'%3E%3Cpath d='M20.067 8.478c.492.88.556 2.014.3 3.327-.74 3.806-3.276 5.12-6.514 5.12h-.5a.805.805 0 00-.794.68l-.04.22-.63 3.993-.028.15a.805.805 0 01-.794.68H7.72a.483.483 0 01-.477-.558L7.418 21h1.518l.95-6.02h1.385c4.678 0 7.75-2.203 8.796-6.502z'/%3E%3C/svg%3E" style="width: 20px; height: 20px; display: inline;"> PayPal
+                            </button>
+                            <button type="button" class="payment-method-btn" onclick="selectPayment('venmo')">
+                                💙 Venmo
+                            </button>
+                            <button type="button" class="payment-method-btn" onclick="selectPayment('cashapp')">
+                                💚 Cash App
+                            </button>
+                        </div>
+
+                        <div id="cardPayment" class="payment-details">
+                            <div class="form-group">
+                                <label for="cardNumber">Card Number *</label>
+                                <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                <div class="form-group">
+                                    <label for="cardExpiry">Expiry Date *</label>
+                                    <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5">
+                                </div>
+                                <div class="form-group">
+                                    <label for="cardCVV">CVV *</label>
+                                    <input type="text" id="cardCVV" placeholder="123" maxlength="4">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="paypalPayment" class="payment-details" style="display: none;">
+                            <p style="text-align: center; color: #6a6a6a; padding: 2rem;">
+                                You will be redirected to PayPal to complete your donation securely.
+                            </p>
+                        </div>
+
+                        <div id="venmoPayment" class="payment-details" style="display: none;">
+                            <p style="text-align: center; color: #6a6a6a;">
+                                <strong>Venmo:</strong> @SpiritAndSoulOutreach<br>
+                                <em>Please include your email in the note</em>
+                            </p>
+                        </div>
+
+                        <div id="cashappPayment" class="payment-details" style="display: none;">
+                            <p style="text-align: center; color: #6a6a6a;">
+                                <strong>Cash App:</strong> $SpiritSoulOutreach<br>
+                                <em>Please include your email in the note</em>
+                            </p>
+                        </div>
+
+                        <button type="submit" class="donate-submit-btn">
+                            Complete Donation
+                        </button>
+
+                        <p style="text-align: center; color: #999; font-size: 0.85rem; margin-top: 1rem;">
+                            🔒 Your donation is secure and tax-deductible
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upload Section -->
+    <section id="upload" class="section-content">
+        <h2>📤 Share Your Story</h2>
+        <div class="upload-section">
+            <div class="upload-box">
+                <h3>Upload Photos or Videos</h3>
+                <p style="color: #6a6a6a; margin: 1rem 0;">Share moments from our ministry events, testimonies, or community service.</p>
+                
+                <input type="file" id="fileInput" accept="image/*,video/*" multiple onchange="handleFileSelect(event)">
+                <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                    Choose Files
+                </button>
+
+                <form id="uploadForm" style="display: none;">
+                    <div class="form-group">
+                        <label for="mediaTitle">Title</label>
+                        <input type="text" id="mediaTitle" placeholder="Give your media a title..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mediaDescription">Description</label>
+                        <textarea id="mediaDescription" placeholder="Tell us about this moment..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mediaDate">Date</label>
+                        <input type="date" id="mediaDate">
+                    </div>
+
+                    <button type="submit" class="upload-btn" style="width: 100%;">Submit</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="preview-container" style="margin-top: 2rem;"></div>
+    </section>
+
+    <!-- Modal for Full View -->
+    <div id="modal" class="modal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div id="modal-media"></div>
+            <div class="modal-caption" id="modal-caption"></div>
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer>
+        <p><strong>Spirit & Soul Outreach</strong></p>
+        <p class="small">Transforming lives through faith, hope, and love</p>
+        <p class="small">Contact: info@spiritandsoul.org | (000 00 0000)</p>
+    </footer>
+
     <script>
-        function openModal(imageSrc) {
-            document.getElementById('imageModal').style.display = 'block';
-            document.getElementById('modalImage').src = imageSrc;
+        // Tab Navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section-content').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+
+            // Activate clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Modal Functions
+        function openModal(element) {
+            const modal = document.getElementById('modal');
+            const modalMedia = document.getElementById('modal-media');
+            const modalCaption = document.getElementById('modal-caption');
+
+            // Get media element
+            const img = element.querySelector('img');
+            const video = element.querySelector('video');
+            const caption = element.querySelector('h3').textContent;
+
+            modalMedia.innerHTML = '';
+
+            if (img) {
+                const newImg = document.createElement('img');
+                newImg.src = img.src;
+                newImg.alt = img.alt;
+                modalMedia.appendChild(newImg);
+            } else if (video) {
+                const newVideo = document.createElement('video');
+                newVideo.src = video.src;
+                newVideo.controls = true;
+                newVideo.autoplay = true;
+                modalMedia.appendChild(newVideo);
+            }
+
+            modalCaption.textContent = caption;
+            modal.classList.add('active');
         }
 
         function closeModal() {
-            document.getElementById('imageModal').style.display = 'none';
+            const modal = document.getElementById('modal');
+            const video = modal.querySelector('video');
+            if (video) {
+                video.pause();
+            }
+            modal.classList.remove('active');
         }
 
+        // File Upload Handling
+        function handleFileSelect(event) {
+            const files = event.target.files;
+            const form = document.getElementById('uploadForm');
+            const previewContainer = document.getElementById('preview-container');
+
+            if (files.length > 0) {
+                form.style.display = 'block';
+                previewContainer.innerHTML = '<h3 style="color: #3f5d55; margin-bottom: 1rem;">Preview:</h3>';
+
+                Array.from(files).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const preview = document.createElement('div');
+                        preview.className = 'gallery-item';
+                        preview.style.display = 'inline-block';
+                        preview.style.marginRight = '1rem';
+
+                        if (file.type.startsWith('image/')) {
+                            preview.innerHTML = `<img src="${e.target.result}" alt="Preview" style="max-width: 200px; height: auto;">`;
+                        } else if (file.type.startsWith('video/')) {
+                            preview.innerHTML = `<video src="${e.target.result}" style="max-width: 200px; height: auto;" controls></video>`;
+                        }
+
+                        previewContainer.appendChild(preview);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+        }
+
+        // Form Submission
+        document.getElementById('uploadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const title = document.getElementById('mediaTitle').value;
+            const description = document.getElementById('mediaDescription').value;
+            const date = document.getElementById('mediaDate').value;
+            const files = document.getElementById('fileInput').files;
+
+            // In a real app, you would upload to a server here
+            alert('Thank you for sharing! Your media has been submitted for review.\n\nTitle: ' + title);
+
+            // Reset form
+            this.reset();
+            this.style.display = 'none';
+            document.getElementById('preview-container').innerHTML = '';
+            document.getElementById('fileInput').value = '';
+        });
+
         // Close modal with Escape key
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
                 closeModal();
             }
+        });
+
+        // Donation Functions
+        function selectAmount(amount) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.amount-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Set active button
+            event.target.classList.add('active');
+
+            // Set custom amount field
+            const customAmount = document.getElementById('customAmount');
+            if (amount === 'custom') {
+                customAmount.focus();
+            } else {
+                customAmount.value = amount;
+            }
+        }
+
+        function selectPayment(method) {
+            // Remove active class from all payment buttons
+            document.querySelectorAll('.payment-method-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Set active button
+            event.target.classList.add('active');
+
+            // Hide all payment details
+            document.querySelectorAll('.payment-details').forEach(detail => {
+                detail.style.display = 'none';
+            });
+
+            // Show selected payment method
+            const paymentDetails = {
+                'card': 'cardPayment',
+                'paypal': 'paypalPayment',
+                'venmo': 'venmoPayment',
+                'cashapp': 'cashappPayment'
+            };
+
+            document.getElementById(paymentDetails[method]).style.display = 'block';
+        }
+
+        function openDonation(caseName) {
+            // Navigate to donation tab
+            showSection('donate');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Set the donation purpose
+            setTimeout(() => {
+                const purposeSelect = document.getElementById('donationPurpose');
+                const options = purposeSelect.options;
+                for (let i = 0; i < options.length; i++) {
+                    if (options[i].text.includes(caseName.split(':')[0])) {
+                        purposeSelect.selectedIndex = i;
+                        break;
+                    }
+                }
+            }, 500);
+        }
+
+        // Donation Form Submission
+        document.getElementById('donationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const amount = document.getElementById('customAmount').value;
+            const purpose = document.getElementById('donationPurpose').selectedOptions[0].text;
+            const name = document.getElementById('donorName').value;
+            const email = document.getElementById('donorEmail').value;
+            const recurring = document.getElementById('recurring').checked;
+            const anonymous = document.getElementById('anonymous').checked;
+
+            const message = `Thank you for your generous donation!
+
+Amount: $${amount}${recurring ? ' (Monthly)' : ''}
+Purpose: ${purpose}
+${anonymous ? 'Anonymous Donation' : 'Donor: ' + name}
+
+A confirmation email will be sent to ${email}.
+
+Your support helps us continue our mission of serving those in need. God bless you!`;
+
+            alert(message);
+
+            // In a real app, this would process payment through Stripe, PayPal, etc.
+            // Reset form
+            this.reset();
+            document.getElementById('customAmount').value = '50';
+        });
+
+        // Card number formatting
+        document.getElementById('cardNumber').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s/g, '');
+            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+            e.target.value = formattedValue;
+        });
+
+        // Expiry date formatting
+        document.getElementById('cardExpiry').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.slice(0, 2) + '/' + value.slice(2, 4);
+            }
+            e.target.value = value;
         });
     </script>
 </body>
